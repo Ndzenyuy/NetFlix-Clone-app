@@ -61,8 +61,10 @@ jobs:
           dependency-check-dir/dependency-check/bin/dependency-check.sh \
             --project "Netflix" \
             --scan . \
-            --format "XML" \
-            --disableYarnAudit --disableNodeAudit
+            --format "ALL" \
+            --disableYarnAudit \
+            --disableNodeAudit \
+            --disableAssembly \
 
       - name: Upload OWASP Report
         uses: actions/upload-artifact@v4
