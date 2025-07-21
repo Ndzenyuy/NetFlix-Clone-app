@@ -52,12 +52,13 @@ jobs:
       - name: Download OWASP Dependency Check
         run: |
           curl -L -o dependency-check.zip https://github.com/jeremylong/DependencyCheck/releases/download/v8.4.0/dependency-check-8.4.0-release.zip
-          unzip dependency-check.zip -d dependency-check
-          chmod +x dependency-check/bin/dependency-check.sh
+          unzip dependency-check.zip -d dependency-check-dir
+          ls dependency-check-dir
+          chmod +x dependency-check-dir/dependency-check/bin/dependency-check.sh
 
       - name: Run OWASP Dependency Check
         run: |
-          ./dependency-check/bin/dependency-check.sh \
+          dependency-check-dir/dependency-check/bin/dependency-check.sh \
             --project "Netflix" \
             --scan . \
             --format "XML" \
