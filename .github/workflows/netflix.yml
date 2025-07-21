@@ -72,3 +72,10 @@ jobs:
         with:
           name: dependency-check-report
           path: "**/dependency-check-report.xml"
+
+      - name: Trivy FS Scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: "fs"
+          scan-ref: "."
+          output: "trivyfs.txt"
