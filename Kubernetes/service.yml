@@ -5,10 +5,9 @@ metadata:
   labels:
     app: netflix-app
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
-    - port: 8080
+    - port: 80
       targetPort: 80
-      nodePort: 30100
   selector:
     app: netflix-app
