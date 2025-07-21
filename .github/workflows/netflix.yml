@@ -10,6 +10,10 @@ on:
 
   workflow_dispatch:
 
+permissions:
+  id-token: write
+  contents: read
+
 env:
   AWS_REGION: us-east-1
   ECR_REPOSITORY: neflix-clone
@@ -91,6 +95,7 @@ jobs:
           path: trivyfs.txt
 
   build-and-push:
+    needs: Code-Quality-checks
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
