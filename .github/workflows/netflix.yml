@@ -31,10 +31,6 @@ jobs:
           java-version: "17"
           distribution: "temurin"
 
-      - name: Clean Workspace
-        run: |
-          rm -rf *
-
       - name: Setup SonarQube
         uses: warchant/setup-sonar-scanner@v7
 
