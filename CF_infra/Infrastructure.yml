@@ -8,7 +8,7 @@ Parameters:
 
   ClusterVersion:
     Type: String
-    Default: "1.30"
+    Default: "1.31"
 
   VpcId:
     Type: AWS::EC2::VPC::Id
