@@ -128,7 +128,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${{ env.ECR_REPOSITORY }}:${{ steps.get-version.outputs.version }} ./client
+          docker build -t ${{ env.ECR_REPOSITORY }}:${{ steps.get-version.outputs.version }} .
 
       - name: Scan image with Trivy
         uses: aquasecurity/trivy-action@master
