@@ -14,7 +14,7 @@ env:
   AWS_REGION: us-east-1
 
 jobs:
-  Code-Quality-SonarQube:
+  Code-Quality-checks:
     runs-on: ubuntu-latest
     steps:
       - name: Code checkout
@@ -34,3 +34,20 @@ jobs:
           -Dsonar.jacoco.reportsPath=target/jacoco.exec
           -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml
           -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: OWASP Dependency Check
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: "Netflix"
+          path: "."
+          format: "XML"
+          args: "--disableYarnAudit --disableNodeAudit"
+
+      - name: Upload OWASP Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-check-report
+          path: "**/dependency-check-report.xml"
