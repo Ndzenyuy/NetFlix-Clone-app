@@ -65,7 +65,6 @@ jobs:
             --disableYarnAudit \
             --disableNodeAudit \
             --disableAssembly \
-            --disableJs \
             --exclude node_modules
 
       - name: Upload OWASP Report
