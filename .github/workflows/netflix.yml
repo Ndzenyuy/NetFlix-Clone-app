@@ -147,3 +147,46 @@ jobs:
 
           docker push ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ steps.get-version.outputs.version }}
           docker push ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest
+
+  update-helm-chart:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+      - name: Get version from VERSION file
+        id: get-version
+        run: |
+          if [ -f VERSION ]; then
+            VERSION=$(cat VERSION)
+          else
+            echo "VERSION file not found. Exiting..."
+            exit 1
+          fi
+          echo "Current version: $VERSION"
+          echo version=$VERSION >> $GITHUB_OUTPUT
+
+      - name: Clone Repo B
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY_PRIVATE }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          git clone https://github.com/Ndzenyuy/Netflix-Clone-infra.git
+          cd Netflix-Clone
+
+
+          NEW_TAG=${{ steps.get-version.outputs.version }} 
+          sed -i "s/tag: .*/tag: $NEW_TAG/" netflix-clone/values.yaml
+
+          git add netflix-clone/values.yaml
+          git commit -m "Update image tag to $NEW_TAG from Repo A CI"
+          git push origin main
