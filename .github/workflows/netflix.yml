@@ -181,7 +181,7 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           git clone https://github.com/Ndzenyuy/Netflix-Clone-infra.git
-          cd Netflix-Clone
+          cd Netflix-Clone-infra
 
 
           NEW_TAG=${{ steps.get-version.outputs.version }} 
