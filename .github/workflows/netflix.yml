@@ -180,7 +180,7 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan github.com >> ~/.ssh/known_hosts
-          git clone https://github.com/Ndzenyuy/Netflix-Clone-infra.git
+          git clone git@github.com:Ndzenyuy/Netflix-Clone-infra.git
           cd Netflix-Clone-infra
 
 
